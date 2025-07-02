@@ -11,7 +11,12 @@ class StringMatchingFixture : public Test {
 public:
     void checkMatchingLengthScore(int expectedScore, CompareStirng compareStr) {
         StringMatching strMatching;
-        EXPECT_EQ(expectedScore, strMatching.getScore(compareStr));
+        EXPECT_EQ(expectedScore, strMatching.getLengthScore(compareStr));
+    }
+
+    void checkMatchingUsedAlphabetScore(int expectedScore, CompareStirng compareStr) {
+        StringMatching strMatching;
+        EXPECT_EQ(expectedScore, strMatching.getUsedAlphabetScore(compareStr));
     }
 private:
 };
@@ -38,6 +43,26 @@ TEST_F(StringMatchingFixture, strBlong) {
 TEST_F(StringMatchingFixture, strBlongX2) {
     CompareStirng compareStr = { "BB","CCCC" };
     checkMatchingLengthScore(0, compareStr);
+}
+
+TEST_F(StringMatchingFixture, sameAlphabetUsed1) {
+    CompareStirng compareStr = { "ABC","CAB" };
+    checkMatchingUsedAlphabetScore(MAX_SCORE_FOR_STR_USED_ALPHABET, compareStr);
+}
+
+TEST_F(StringMatchingFixture, sameAlphabetUsed2) {
+    CompareStirng compareStr = { "ABCDEF","FEDCAB" };
+    checkMatchingUsedAlphabetScore(MAX_SCORE_FOR_STR_USED_ALPHABET, compareStr);
+}
+
+TEST_F(StringMatchingFixture, notsameAlphabetUsed1) {
+    CompareStirng compareStr = { "ABCD","EFGH" };
+    checkMatchingUsedAlphabetScore(0, compareStr);
+}
+
+TEST_F(StringMatchingFixture, notsameAlphabetUsed2) {
+    CompareStirng compareStr = { "ABCDEFG","IKG" };
+    checkMatchingUsedAlphabetScore(0, compareStr);
 }
 
 int main() {
