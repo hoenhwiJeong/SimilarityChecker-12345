@@ -7,6 +7,39 @@ using std::string;
 
 using namespace testing;
 
+class StringMatchingFixture : public Test {
+public:
+    void checkMatchingLengthScore(int expectedScore, CompareStirng compareStr) {
+        StringMatching strMatching;
+        EXPECT_EQ(expectedScore, strMatching.getScore(compareStr));
+    }
+private:
+};
+
+TEST_F(StringMatchingFixture, SameLength) {
+    CompareStirng compareStr = {"ASD","DSA"};
+    checkMatchingLengthScore(MAX_SCORE_FOR_STR_LEGNTH, compareStr);
+}
+
+TEST_F(StringMatchingFixture, strAlong) {
+    CompareStirng compareStr = { "ASDD","DSA" };
+    checkMatchingLengthScore(45, compareStr);
+}
+
+TEST_F(StringMatchingFixture, strAlongX2) {
+    CompareStirng compareStr = { "AA","B" };
+    checkMatchingLengthScore(0, compareStr);
+}
+
+TEST_F(StringMatchingFixture, strBlong) {
+    CompareStirng compareStr = { "ASD","DSAD" };
+    checkMatchingLengthScore(45, compareStr);
+}
+TEST_F(StringMatchingFixture, strBlongX2) {
+    CompareStirng compareStr = { "BB","CCCC" };
+    checkMatchingLengthScore(0, compareStr);
+}
+
 int main() {
     ::testing::InitGoogleMock();
     return RUN_ALL_TESTS();
